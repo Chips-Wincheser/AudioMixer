@@ -6,6 +6,9 @@ public class MasterToggle : MonoBehaviour
     private const string MasterMusic = "MasterMusic";
 
     [SerializeField] private AudioMixer _masterMixer;
+    [SerializeField] private float _onVolume = 1f;
+    [SerializeField] private float _offVolume = 0.0001f;
+    [SerializeField] private float _volumeMultiplier = 20f;
 
     private bool _isEnable=false;
 
@@ -13,11 +16,11 @@ public class MasterToggle : MonoBehaviour
     {
         if (_isEnable)
         {
-            _masterMixer.SetFloat(MasterMusic, Mathf.Log10(1) * 20);
+            _masterMixer.SetFloat(MasterMusic, Mathf.Log10(_onVolume) * _volumeMultiplier);
         }
         else
         {
-            _masterMixer.SetFloat(MasterMusic, Mathf.Log10(0.0001f) * 20);
+            _masterMixer.SetFloat(MasterMusic, Mathf.Log10(_offVolume) * _volumeMultiplier);
         }
 
         _isEnable=!_isEnable;
