@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MasterToggle : MonoBehaviour
+public class ButtonEvent : MonoBehaviour
 {
-    [SerializeField] private AudioListener _listener;
     [SerializeField] private Button _button;
+    [SerializeField] private int clipIndex;
 
-    private bool _isEnable=false;
+    public event Action <int> OnClick;
 
     protected void OnEnable()
     {
@@ -20,7 +21,6 @@ public class MasterToggle : MonoBehaviour
 
     private void HandleButtonClick()
     {
-        _isEnable=!_isEnable;
-        _listener.enabled = !_isEnable;
+        OnClick?.Invoke(clipIndex);
     }
 }

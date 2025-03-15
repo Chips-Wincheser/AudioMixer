@@ -4,9 +4,7 @@ using UnityEngine.UI;
 
 public class VolumeSetter : MonoBehaviour
 {
-    private const string BackgroundMusic = "BackgroundMusic";
-    private const string ButtonMusic = "ButtonMusic";
-    private const string MasterMusic = "MasterMusic";
+    private const float MinVolume = -80f;
 
     [SerializeField] private AudioMixer _masterMixer;
     [SerializeField] private Slider _volumeSlider;
@@ -17,18 +15,10 @@ public class VolumeSetter : MonoBehaviour
     public void SetVolume(string mixerName)
     {
         _musicLvl = _volumeSlider.value;
-        
-        if (mixerName==MasterMusic)
-        {
+
+        if (_musicLvl > 0)
             _masterMixer.SetFloat(mixerName, Mathf.Log10(_musicLvl) * _volumeMultiplier);
-        }
-        else if (mixerName==ButtonMusic)
-        {
-            _masterMixer.SetFloat(mixerName, Mathf.Log10(_musicLvl) * _volumeMultiplier);
-        }
-        else if (mixerName==BackgroundMusic)
-        {
-            _masterMixer.SetFloat(mixerName, Mathf.Log10(_musicLvl) * _volumeMultiplier);
-        }
+        else
+            _masterMixer.SetFloat(mixerName, MinVolume);
     }
 }
