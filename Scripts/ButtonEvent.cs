@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class ButtonEvent : MonoBehaviour
 {
     [SerializeField] private Button _button;
-    [SerializeField] private int clipIndex;
+    [SerializeField] private AudioClip _audioClip;
 
-    public event Action <int> OnClick;
+    public event Action <AudioClip> Clicked;
 
     protected void OnEnable()
     {
@@ -21,6 +21,6 @@ public class ButtonEvent : MonoBehaviour
 
     private void HandleButtonClick()
     {
-        OnClick?.Invoke(clipIndex);
+        Clicked?.Invoke(_audioClip);
     }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -9,16 +10,23 @@ public class VolumeSetter : MonoBehaviour
     [SerializeField] private AudioMixer _masterMixer;
     [SerializeField] private Slider _volumeSlider;
     [SerializeField] private float _volumeMultiplier = 20f;
+    [SerializeField] private string _mixerName;
 
-    private float _musicLvl;
-
-    public void SetVolume(string mixerName)
+    private void OnEnable()
     {
-        _musicLvl = _volumeSlider.value;
+        _volumeSlider.onValueChanged.AddListener(SetVolume);
+    }
 
-        if (_musicLvl > 0)
-            _masterMixer.SetFloat(mixerName, Mathf.Log10(_musicLvl) * _volumeMultiplier);
+    private void OnDisable()
+    {
+        _volumeSlider.onValueChanged.RemoveListener(SetVolume);
+    }
+
+    private void SetVolume(float value)
+    {
+        if (value > 0)
+            _masterMixer.SetFloat(_mixerName, Mathf.Log10(value) * _volumeMultiplier);
         else
-            _masterMixer.SetFloat(mixerName, MinVolume);
+            _masterMixer.SetFloat(_mixerName, MinVolume);
     }
 }

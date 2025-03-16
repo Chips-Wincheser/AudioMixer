@@ -4,14 +4,13 @@ public class ButtonsMusic : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
 
-    [SerializeField] private AudioClip[] _buttonClips;
     [SerializeField] private ButtonEvent[] _buttons;
 
     private void OnEnable()
     {
         foreach (var button in _buttons)
         {
-            button.OnClick+=PlayButtonClip;
+            button.Clicked+=PlayButtonClip;
         }
     }
 
@@ -19,15 +18,15 @@ public class ButtonsMusic : MonoBehaviour
     {
         foreach (var button in _buttons)
         {
-            button.OnClick-=PlayButtonClip;
+            button.Clicked-=PlayButtonClip;
         }
     }
 
-    public void PlayButtonClip(int clipIndex)
+    public void PlayButtonClip(AudioClip audioClip)
     {
-        if(clipIndex>=0 &&  clipIndex<_buttonClips.Length)
+        if(audioClip!=null)
         {
-            _audioSource.PlayOneShot(_buttonClips[clipIndex]);
+            _audioSource.PlayOneShot(audioClip);
         }
     }
 }
